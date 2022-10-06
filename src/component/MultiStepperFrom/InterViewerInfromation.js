@@ -181,6 +181,8 @@ const InterViewerInfromation = () => {
 
 
                 <div className='flex flex-col gap-3 p-3 mt-7' >
+                    <div className='text-tcolor text-2xl font-black' > How would you like to manage candidates for this job?</div>
+
                     <div className='flex gap-3' >
                         <input
 
