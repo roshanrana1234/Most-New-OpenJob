@@ -8,9 +8,12 @@ const router = express.Router();
 
 router.use('/user/ApllyJob', upload.fields([{ name: 'resume', maxcount: 1 }]));
 
-router.get('/getjobs', customerController.getjobs);
 
+//patch
+router.post('/user/changeUserPassword', authenticate, customerController.changeUserPassword);
+router.post('/user/editProfile', authenticate, customerController.editProfile);
 
+//post
 router.post('/user/register', customerController.register);
 router.post('/user/login', customerController.login);
 router.post('/user/ApllyJob', authenticate, customerController.ApllyJob);
@@ -20,7 +23,7 @@ router.post('/user/ApllyJob', authenticate, customerController.ApllyJob);
 router.get('/getjobsbyId/:_id', customerController.getjobsbyId);
 router.get('/user/about', authenticate, customerController.about);
 router.get('/user/getActivejobs', customerController.getActivejobs);
-
+router.get('/getjobs', customerController.getjobs);
 //delete
 
 

@@ -50,6 +50,7 @@ class userController {
     try {
       //   const {name,email,password,cpassword,work,mobile,role} = req.body;
       let lol = { ...req.body, createdBy: req.user._id }
+
       console.log(lol)
       const register = new Postjob(lol)
       await register.save()
@@ -222,6 +223,137 @@ class userController {
     }
 
   }
+
+
+  static editProfile = async (req, res) => {
+
+    try {
+      const { fullname, phonenumber, email } = req.body
+
+      // if (password && password_confirmation) {
+      //   if (password !== password_confirmation) {
+      //     res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+      //   }
+      const userLogin = await Singup.findOne({ _id: req.user._id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Singup.findByIdAndUpdate(req.user._id, { $set: { fullname: fullname, phonenumber: phonenumber, email: email } })
+        res.send({ "status": "success", "message": "Profile changed succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+  static EditfirstfrombyId = async (req, res) => {
+
+    try {
+
+      const { companyName, companyWeb, employeesNumber } = req.body;
+      const { _id } = req.params;
+      console.log("rid", _id);
+
+
+      const userLogin = await Singup.findOne({ _id: req.user._id })
+      if (userLogin) {
+
+
+        const ram = await Singup.findOneAndUpdate(
+          { "firstfrom": { "$elemMatch": { _id: _id } } },
+          {
+            $set: {
+              "adress.$.companyName": companyName,
+              "adress.$.companyWeb": companyWeb,
+              "adress.$.employeesNumber": employeesNumber,
+              // "adress.$.pincode": pincode,
+              // "adress.$.locality": locality,
+              // "adress.$.mobile": mobile,
+
+            }
+          },
+        )
+        res.send({ "status": "success", "message": "adress saved", 'adress': userLogin.adress })
+
+
+      }
+    } catch (error) {
+
+      console.log("error" + error.message);
+    }
+  }
+
+
+  static changeUserPassword = async (req, res) => {
+
+    try {
+      const { password, password_confirmation, Oldpassword } = req.body
+
+      if (password && password_confirmation) {
+        if (password !== password_confirmation) {
+          res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+        }
+        const userLogin = await Singup.findOne({ _id: req.user._id })
+        console.log(userLogin)
+        if (userLogin) {
+          //  console.log(userLogin._id)
+          // console.log(req.user._id)
+
+          const isMatch = await bcrypt.compare(Oldpassword, userLogin.password)
+          if (isMatch) {
+            const salt = await bcrypt.genSalt(10)
+            const newHashPassword = await bcrypt.hash(password, salt)
+            await Singup.findByIdAndUpdate(req.user._id, { $set: { password: newHashPassword } })
+            res.send({ "status": "success", "message": "Password changed succesfully" })
+          }
+        }
+
+        else {
+          res.send({ "status": "failed", "message": "All Fields are Required" })
+        }
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+
+  static editjobbyid = function (req, res) {
+
+    console.log(req.body);
+    const { _id } = req.body
+
+    Postjob.findByIdAndUpdate(_id, { $set: req.body }, { new: true }, function (err, result) {
+      if (err) {
+        console.log(err);
+      }
+      console.log("RESULT: " + result);
+      res.send('Done')
+    });
+  };
+
+
+  static editjobbyid = async (req, res) => {
+
+    const { _id } = req.params
+    const userLogin = await Postjob.findByIdAndUpadet({ _id })
+    if (userLogin) {
+
+      // res.send(userLogin)
+      console.log(userLogin)
+    }
+
+  }
+
 
 
 

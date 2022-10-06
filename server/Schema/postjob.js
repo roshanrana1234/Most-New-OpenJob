@@ -36,7 +36,7 @@ const PostjobSchema = new mongoose.Schema({
 
     JobActivation: {
         type: String,
-        enum: ["under review", "Active"],
+        enum: ["under review", "Active", "Expired", "Terminated"],
         default: "under review"
     },
     applicationFrom: {

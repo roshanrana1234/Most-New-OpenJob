@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 import { useGetDetailsQuery } from '../../services/profile';
-import { useGetjobsQuery } from '../../services/profile'
+// import { useGetjobsQuery } from '../../services/profile'
 import { getToken, removeToken } from '../../services/adminLocalStorage';
-import { useGetpostjobsQuery, useDeletejobbyidMutation, useActivatejobMutation } from '../../services/profile';
+import { useGetpostjobsQuery, useDeletejobbyidMutation, useActivatejobMutation, useAdmingetjobsQuery } from '../../services/profile';
 
 const AdminAllJob = () => {
 
     let token = getToken('token')
 
-    const { data: Data } = useGetjobsQuery(token)
+    const { data: Data } = useAdmingetjobsQuery(token)
     const [deletepost] = useDeletejobbyidMutation()
     const [activation] = useActivatejobMutation()
 

@@ -10,9 +10,10 @@ import customerRoute from "./routes/customer.js";
 import adminRoute from "./routes/admin.js";
 
 const port = process.env.PORT || '5000';
+// const DATABASE_URL = "mongodb://103.190.242.94:27017"
 const DATABASE_URL = "mongodb+srv://pratham:lookman17@cluster1.vuxzs.mongodb.net/?retryWrites=true&w=majority"
-// mongodb+srv://roshan:lookman17@cluster0.1pjnl.mongodb.net/?retryWrites=true&w=majority
-
+// mongodb+srv://pratham:lookman17@cluster1.vuxzs.mongodb.net/?retryWrites=true&w=majority
+// 103.190.242.94:27017
 connectDB(DATABASE_URL)
 export const app = express()
 

@@ -141,6 +141,33 @@ class customerController {
 
 
 
+  static editProfile = async (req, res) => {
+
+    try {
+      const { fullname, phonenumber, email } = req.body
+
+      // if (password && password_confirmation) {
+      //   if (password !== password_confirmation) {
+      //     res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+      //   }
+      const userLogin = await Singup.findOne({ _id: req.user._id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Singup.findByIdAndUpdate(req.user._id, { $set: { fullname: fullname, phonenumber: phonenumber, email: email } })
+        res.send({ "status": "success", "message": "Profile changed succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
   static searchjobs = async (req, res) => {
 
     const { typeOfJob, jobcity } = req.body
@@ -164,6 +191,43 @@ class customerController {
     }
 
   }
+
+
+  static changeUserPassword = async (req, res) => {
+
+    try {
+      const { password, password_confirmation, Oldpassword } = req.body
+
+      if (password && password_confirmation) {
+        if (password !== password_confirmation) {
+          res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+        }
+        const userLogin = await UserSingup.findOne({ _id: req.user._id })
+        console.log(userLogin)
+        if (userLogin) {
+          //  console.log(userLogin._id)
+          // console.log(req.user._id)
+
+          const isMatch = await bcrypt.compare(Oldpassword, userLogin.password)
+          if (isMatch) {
+            const salt = await bcrypt.genSalt(10)
+            const newHashPassword = await bcrypt.hash(password, salt)
+            await UserSingup.findByIdAndUpdate(req.user._id, { $set: { password: newHashPassword } })
+            res.send({ "status": "success", "message": "Password changed succesfully" })
+          }
+        }
+
+        else {
+          res.send({ "status": "failed", "message": "All Fields are Required" })
+        }
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
 
   // console.log(req.user.role,"529")
   //   res.send({"user":req.user}) 

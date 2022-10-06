@@ -11,7 +11,13 @@ const router = express.Router();
 // router.get('/getjobRole', adminController.getjobRole);
 router.post('/admin/register', adminController.register);
 router.post('/admin/login', adminController.login);
+
+//patch
 router.patch('/admin/Activatejob/:_id', authenticate, adminController.Activatejob);
+router.patch('/admin/addtoExpired/:_id', authenticate, adminController.addtoExpired);
+router.patch('/admin/changeUserPassword', authenticate, adminController.changeUserPassword);
+router.patch('/admin/editProfile', authenticate, adminController.editProfile);
+
 //get request
 router.get('/admin/about', authenticate, adminController.about);
 router.get('/admin/getjobs', authenticate, adminController.getjobs);
@@ -20,6 +26,7 @@ router.get('/statelist', adminController.statelist);
 
 router.get('/getUnderReviewjobs', authenticate, adminController.getUnderReviewjobs);
 router.get('/getActivejobs', authenticate, adminController.getActivejobs);
+router.get('/getExpiredjobs', authenticate, adminController.getExpiredjobs);
 
 
 

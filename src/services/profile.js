@@ -241,6 +241,22 @@ export const profileApi = createApi({
     }),
 
 
+    admingetjobs: builder.query({
+      query: (token) => ({
+
+        url: `admin/getjobs`,
+        method: 'GET',
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }),
+      providesTags: ['Postjob'],
+    }),
+
+
+
+
     getActivejobs: builder.query({
       query: (token) => ({
 
@@ -397,5 +413,6 @@ export const {
   useGetstatelistQuery,
   useAdminloginMutation,
   useDeleteStarbyIdMutation,
+  useAdmingetjobsQuery,
 
 } = profileApi;
