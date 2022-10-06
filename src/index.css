@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* NOte */
+/* 1):- in we define any custum component after utilities we will no able to change or custumise the element furthur in inlines  or we cannot over write the css again */
+
+/* Base (it will apply over all body)*/
+@layer base {
+  html {
+    /* font-family: Proxima Nova, system-ui, sans-serif; */
+  }
+}
+
+/* Conponents (We buld pre defined component here) */
+/* @layer components {
+  .btn {
+    @apply bg-secondary p-2 px-5 text-white font-bold rounded-lg;
+  }
+} */
+
+/* Custum class making in tailwind */
+@layer utilities {
+  .opend {
+    @apply -translate-x-full lg:translate-x-0 inset-0 transform lg:relative absolute z-10 w-4/5 text-white h-screen bg-gray-400 p-3 lg:w-80;
+  }
+}
+@layer utilities {
+  .close {
+    @apply translate-x-0 lg:translate-x-0 inset-0 transform lg:relative absolute z-10 w-4/5 text-white h-screen bg-gray-400 p-3 lg:w-80;
+  }
+}
+@layer utilities {
+  .content {
+    @apply hidden;
+  }
+  ,
+  .active-tabs {
+    @apply border-[#3B77B5] bg-gray-700 text-white;
+  }
+  ,
+  .active-content {
+    @apply block;
+  }
+}
+
+@layer utilities {
+  .bbcolor {
+    @apply bg-[#1A2025];
+  }
+}
+
+@layer utilities {
+  .btncolor {
+    @apply bg-[#009688];
+  }
+}
+
+@layer utilities {
+  .bodycolor {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#000046] to-black;
+  }
+}
+
+@layer utilities {
+  .active {
+    @apply text-green-600 bg-white rounded p-3;
+  }
+}
