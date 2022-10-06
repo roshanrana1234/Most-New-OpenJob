@@ -285,7 +285,7 @@ const Home = () => {
 
                 <div div className='my-20' >
                     <div className=' flex justify-center items-center p-2 font-black text-xl  lg:text-3xl my-8 ' >
-                        How To Get A Job On Openjob
+                        How To Get a Job On Openjob
                     </div>
 
 
