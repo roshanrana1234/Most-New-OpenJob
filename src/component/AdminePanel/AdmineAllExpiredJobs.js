@@ -12,7 +12,7 @@ const AdmineAllExpiredJobs = () => {
     const [activation] = useActivatejobMutation()
     return (
         <>
-            <div className='grid grid-cols-2 p-4 h-full overflow-auto text-black' >
+            <div className='grid grid-cols-2 p-4  overflow-auto text-black' >
 
 
                 {
