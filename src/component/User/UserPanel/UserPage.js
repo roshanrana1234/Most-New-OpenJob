@@ -1,17 +1,26 @@
 import React, { useState, useRef, useEffect } from 'react'
 import logo from '../../../images/main.png'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { BsFillBellFill } from "react-icons/bs";
 import { BsFillPersonFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { AiOutlineDownload } from "react-icons/ai";
 import { BsFillArrowRightCircleFill } from "react-icons/bs";
 import { MdArrowDropDown, MdKeyboardArrowDown } from "react-icons/md";
+import { getToken, removeToken } from '../../../services/userLocalStorage';
 
 const UserPage = () => {
     const [open, setopen] = useState(false)
     const [main, setMain] = useState(false)
     const hide = useRef()
+
+    const navigate = useNavigate()
+    const handleLogout = () => {
+        removeToken('token')
+        navigate('/userlogin')
+
+    }
+
 
     useEffect(() => {
         const handler = (e) => {
@@ -73,7 +82,7 @@ const UserPage = () => {
                                             Download applications
                                         </Link>
                                         <div className='hover:bg-gray-200 cursor-pointer  p-3 text-start flex items-center gap-3 cursor:pointer '
-                                        // onClick={handleLogout}
+                                            onClick={handleLogout}
                                         >
                                             <span className='cursor:pointer' ><BsFillArrowRightCircleFill /></span>
 
