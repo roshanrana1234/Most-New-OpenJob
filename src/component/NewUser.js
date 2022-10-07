@@ -113,12 +113,12 @@ const NewUser = () => {
                                         </div>
                                         <div className='flex gap-4' >
                                             <button className='p-2 text-white font-bold px-5 rounded bg-btncolor' >
-                                                Edit
+                                                View
                                             </button>
-                                            <button className='p-2 text-white font-bold px-5 rounded bg-red-500' onClick={() => deletepost({ token, _id })}  >
+                                            {/* <button className='p-2 text-white font-bold px-5 rounded bg-red-500' onClick={() => deletepost({ token, _id })}  >
                                                 Delete
 
-                                            </button>
+                                            </button> */}
                                         </div>
                                     </div>
                                 })
@@ -126,14 +126,7 @@ const NewUser = () => {
                         </div>
                     </div>
 
-
-
-
-
-
-
-
-                    <div className='lg:col-span-2 border col-span-3  bg-[#F8F8F8]  p-10 place-items-center max-h-screen  overflow-auto ' >
+                    <div className='lg:col-span-2 border col-span-3  bg-[#F8F8F8]  p-4 place-items-center max-h-screen  overflow-auto ' >
 
                         <Outlet />
 
