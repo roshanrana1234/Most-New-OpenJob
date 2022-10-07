@@ -8,7 +8,7 @@ import { useGetDetailsQuery } from '../../services/profile';
 import { useGetjobsQuery } from '../../services/profile';
 import { getToken, removeToken } from '../../services/adminLocalStorage';
 import { useGetActivejobsQuery, useDeletejobbyidMutation } from '../../services/profile';
-
+import { Link } from 'react-router-dom';
 const AdmineActivatedJob = () => {
 
     let token = getToken('token')
@@ -38,13 +38,11 @@ const AdmineActivatedJob = () => {
                                 </button>
                             </div>
                             <div className='flex gap-4' >
-                                <button className='p-2 text-white font-bold px-5 rounded bg-btncolor' >
-                                    Edit
-                                </button>
-                                {/* <button className='p-2 text-white font-bold px-5 rounded bg-red-500' onClick={() => deletepost({ token, _id })}  >
-                                Delete
-
-                            </button> */}
+                                <Link to={`/adminedashboard/detail/${_id}`} >
+                                    <button className='p-2 text-white font-bold px-5 rounded bg-btncolor' >
+                                        view
+                                    </button>
+                                </Link>
                             </div>
                         </div>
                     })

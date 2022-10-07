@@ -2,17 +2,14 @@ import React from 'react';
 import { useGetDetailsQuery } from '../../services/profile';
 // import { useGetjobsQuery } from '../../services/profile'
 import { getToken, removeToken } from '../../services/adminLocalStorage';
-import { useGetpostjobsQuery, useDeletejobbyidMutation, useActivatejobMutation, useAdmingetjobsQuery } from '../../services/profile';
+import { useGetpostjobsQuery, useDeletejobbyidMutation, useActivatejobMutation, useGetExpiredjobsQuery } from '../../services/profile';
 import { Link } from 'react-router-dom';
-
-const AdminAllJob = () => {
-
+const AdmineAllExpiredJobs = () => {
     let token = getToken('token')
 
-    const { data: Data } = useAdmingetjobsQuery(token)
+    const { data: Data } = useGetExpiredjobsQuery(token)
     const [deletepost] = useDeletejobbyidMutation()
     const [activation] = useActivatejobMutation()
-
     return (
         <>
             <div className='grid grid-cols-2 p-4 h-full overflow-auto text-black' >
@@ -57,4 +54,4 @@ const AdminAllJob = () => {
     )
 }
 
-export default AdminAllJob
+export default AdmineAllExpiredJobs

@@ -122,7 +122,7 @@ class adminController {
   }
 
 
-  
+
   static addtoUnderReview = async (req, res) => {
 
     try {
@@ -148,7 +148,7 @@ class adminController {
 
 
 
-  
+
   static addtoTerminate = async (req, res) => {
 
     try {
