@@ -68,7 +68,7 @@ class adminController {
   //   catch (error) {
   //     console.log(error)
   //     return res.status(422).json({ error: "not found data" })
-  //   }
+  //   };
   // }
 
 
@@ -122,6 +122,55 @@ class adminController {
   }
 
 
+  
+  static addtoUnderReview = async (req, res) => {
+
+    try {
+      const { _id } = req.params
+
+      console.log(_id)
+      const userLogin = await Postjob.findOne({ _id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Postjob.findByIdAndUpdate(_id, { $set: { JobActivation: "under review", } })
+        res.send({ "status": "success", "message": "Expired succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+
+  
+  static addtoTerminate = async (req, res) => {
+
+    try {
+      const { _id } = req.params
+
+      console.log(_id)
+      const userLogin = await Postjob.findOne({ _id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Postjob.findByIdAndUpdate(_id, { $set: { JobActivation: "Terminated", } })
+        res.send({ "status": "success", "message": "Expired succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
 
 
   // static register = async (req, res) => {

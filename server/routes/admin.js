@@ -15,6 +15,9 @@ router.post('/admin/login', adminController.login);
 //patch
 router.patch('/admin/Activatejob/:_id', authenticate, adminController.Activatejob);
 router.patch('/admin/addtoExpired/:_id', authenticate, adminController.addtoExpired);
+router.patch('/admin/addtoUnderReview/:_id', authenticate, adminController.addtoUnderReview);
+router.patch('/admin/addtoTerminate/:_id', authenticate, adminController.addtoTerminate);
+
 router.patch('/admin/changeUserPassword', authenticate, adminController.changeUserPassword);
 router.patch('/admin/editProfile', authenticate, adminController.editProfile);
 

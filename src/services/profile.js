@@ -128,6 +128,7 @@ export const profileApi = createApi({
       }), invalidatesTags: ['Postjob'],
     }),
 
+
     Activatejob: builder.mutation({
       query: ({ _id, token }) => ({
 
@@ -142,7 +143,35 @@ export const profileApi = createApi({
       }), invalidatesTags: ['Postjob'],
     }),
 
+    addtoUnderReview: builder.mutation({
+      query: ({ _id, token }) => ({
 
+        url: `/admin/addtoUnderReview/${_id}`,
+
+        method: 'PATCH',
+
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }), invalidatesTags: ['Postjob'],
+    }),
+
+    addtoTerminate: builder.mutation({
+      query: ({ _id, token }) => ({
+
+        url: `/admin/addtoTerminate/${_id}`,
+
+        method: 'PATCH',
+
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }), invalidatesTags: ['Postjob'],
+    }),
+
+    
 
     // verifyOTP: builder.mutation({
     //   query: (actualData) => {
@@ -228,6 +257,7 @@ export const profileApi = createApi({
       }),
       providesTags: ['Postjob'],
     }),
+
 
     getjobs: builder.query({
       query: () => ({
@@ -389,6 +419,8 @@ export const profileApi = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useAddtoTerminateMutation,
+  useAddtoUnderReviewMutation,
   useUsergetActivejobsQuery,
   useGetActivejobsQuery,
   useGetUnderReviewjobsQuery,
