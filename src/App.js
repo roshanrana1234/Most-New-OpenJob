@@ -70,6 +70,8 @@ const App = () => {
         <Route exact path='/' element={<Home />} />
         <Route exact path='firstform' element={<FirstFrom />} />
 
+
+
         <Route exact path='newuser' element={<NewUser />} >
           <Route index element={<NewLand />} />
           <Route exact path='postjob' element={<MultiStepper />} />
@@ -105,7 +107,6 @@ const App = () => {
           <Route exact path='admineactivatejob' element={<AdmineActivatedJob />} />
           <Route exact path='admineexpiredjob' element={<AdmineAllExpiredJobs />} />
           <Route exact path='/adminedashboard/detail/:adminVID' element={<AdminViewDetail />} />
-
         </Route>
 
         {/* 1). All Jobs
