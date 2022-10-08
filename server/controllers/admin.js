@@ -125,6 +125,47 @@ class adminController {
 
 
 
+  static AutomaticAddtoExpired = async (req, res) => {
+
+    try {
+      // const { _id } = req.params
+
+      // console.log(_id)
+      const userLogin = await Postjob.find({ "updatedAt": { $lt: new Date(new Date().getTime() - (15 * 24 * 60 * 60 * 1000)) } })
+      // console.log(userLogin)
+
+
+      if (userLogin) {
+
+
+        console.log(userLogin)
+        for (let index = 0; index < userLogin.length; index++) {
+          const e = userLogin[index];
+          console.log(e.JobActivation)
+          console.log(e.updatedAt)
+
+
+          // const userNewProduct = await Product.findOneAndUpdate({JobActivation},{ $set: {JobActivation:'Expired'}})
+          // console.log(userNewProduct, "85")
+
+        }
+
+        // await Postjob.findByIdAndUpdate(_id, { $set: { JobActivation: 'Expired', } })
+        res.send({ "status": "success", "message": "Expired succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+
+
   static addtoUnderReview = async (req, res) => {
 
     try {
@@ -175,41 +216,6 @@ class adminController {
   }
 
 
-  // static register = async (req, res) => {
-
-  //   try {
-  //     //   const {name,email,password,cpassword,work,mobile,role} = req.body;
-  //     const {phonenumber,name,email,role} = req.body;
-
-
-  //     const register = new AdminSingup(req.body)
-  //     await register.save()
-
-  //     res.status(201).send({ message: "succesfull", })
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //     return res.status(422).json({ error: "not found data" })
-  //   }
-  // }
-
-
-  // static Postjob = async (req, res) => {
-
-  //   try {
-  //     //   const {name,email,password,cpassword,work,mobile,role} = req.body;
-  //     let lol = { ...req.body, createdBy: req.user._id }
-  //     console.log(lol)
-  //     const register = new Postjob(lol)
-  //     await register.save()
-
-  //     res.status(201).send({ message: " job  post succesfull", })
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //     return res.status(422).json({ error: "not found data" })
-  //   }
-  // }
 
 
 
