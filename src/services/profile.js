@@ -144,9 +144,9 @@ export const profileApi = createApi({
     }),
 
     addtoUnderReview: builder.mutation({
-      query: ({ _id, token }) => ({
+      query: ({ adminVID, token }) => ({
 
-        url: `/admin/addtoUnderReview/${_id}`,
+        url: `/admin/addtoUnderReview/${adminVID}`,
 
         method: 'PATCH',
 
@@ -156,11 +156,30 @@ export const profileApi = createApi({
 
       }), invalidatesTags: ['Postjob'],
     }),
+
+    // admin/addtoExpired
+
+
+    adminaddtoExpired: builder.mutation({
+      query: ({ adminVID, token }) => ({
+
+        url: `/admin/addtoExpired/${adminVID}`,
+
+        method: 'PATCH',
+
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }), invalidatesTags: ['Postjob'],
+    }),
+
+
 
     addtoTerminate: builder.mutation({
-      query: ({ _id, token }) => ({
+      query: ({ adminVID, token }) => ({
 
-        url: `/admin/addtoTerminate/${_id}`,
+        url: `/admin/addtoTerminate/${adminVID}`,
 
         method: 'PATCH',
 
@@ -171,7 +190,7 @@ export const profileApi = createApi({
       }), invalidatesTags: ['Postjob'],
     }),
 
-    
+
 
     // verifyOTP: builder.mutation({
     //   query: (actualData) => {
@@ -330,6 +349,19 @@ export const profileApi = createApi({
       providesTags: ['Postjob'],
     }),
 
+    getExpiredjobs: builder.query({
+      query: (token) => ({
+
+        url: `getExpiredjobs`,
+        method: 'GET',
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }),
+      providesTags: ['Postjob'],
+    }),
+
 
 
 
@@ -434,6 +466,8 @@ export const profileApi = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useAdminaddtoExpiredMutation,
+  useGetExpiredjobsQuery,
   useGetActivepaginatedjobsQuery,
   useAddtoTerminateMutation,
   useAddtoUnderReviewMutation,
