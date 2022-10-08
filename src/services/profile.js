@@ -218,19 +218,21 @@ export const profileApi = createApi({
       providesTags: (result, error, arg) => [{ type: 'Postjob', _id: arg._id }]
     }),
 
-    
 
 
-    
+
+
     getActivepaginatedjobs: builder.query({
-      query: (num) => ({
+      query: (counter) => ({
 
-        url: `getActivepaginatedjobs?page=${num}`,
+
+        url: `getActivepaginatedjobs?page=${counter}`,
+        // getActivepaginatedjobs?page=1
         method: 'GET',
         // headers: {
         //   'authorization': `Bearer ${token}`,
         // },
-        providesTags: ['User'],
+        providesTags: ['Postjob'],
       })
 
     }),

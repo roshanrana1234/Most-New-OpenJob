@@ -7,19 +7,29 @@ import logo from '../../images/main.png'
 import { BsSearch } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import { useUsergetActivejobsQuery } from '../../services/profile'
-import { useGetcitylistQuery, useGetstatelistQuery ,useGetActivepaginatedjobsQuery} from "../../services/profile";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { useGetcitylistQuery, useGetstatelistQuery, useGetActivepaginatedjobsQuery } from "../../services/profile";
 
 import { Link } from 'react-router-dom';
 
 const UserJobFeed = () => {
-//    const {data:Data} = useGetActivepaginatedjobsQuery(counter)
-//    const [counter, setcounter] = useState(0)
-//    console.log(Data)
-    const { data } = useUsergetActivejobsQuery()
+    //    const {data:Data} = useGetActivepaginatedjobsQuery(counter)
+
+    const [counter, setcounter] = useState(0)
+    console.log(counter, "counter")
+
+    const { data } = useGetActivepaginatedjobsQuery(counter)
+    const { data: Data } = useUsergetActivejobsQuery()
+    let limit = Math.round(Data?.length / 4)
+    console.log(limit, "limit");
+
+    // console.log(Data, "19")
+    // console.log(Data?.length, "20")
     const { data: citylist } = useGetcitylistQuery()
-    console.log("this is 11", data)
+
     // if (data) {
-        
+
     //     data.map((value) => {
     //         console.log(value.Area);
     //     })
@@ -223,23 +233,46 @@ const UserJobFeed = () => {
                                                 </button>
                                             </Link>
                                         </div>
-                                        {/* <button  onClick = {() => {setcounter(counter + 1)}}
-                                                  className='text-white p-2 px-6 rounded-lg font-bold bg-gray-600 shadow-2xl active:text-black text-sm lg:text-xl' >
-                                                     see more
-                                                </button>   */}
                                     </div>
 
 
                                 </div>
 
+
                             </div>
                         })
-                        
-                    }
-                    
-                </div>
-                
 
+                    }
+
+                </div>
+
+                {/* <button  onClick = {() => {setcounter(counter + 1)}}
+                                                  className='text-white p-2 px-6 rounded-lg font-bold bg-gray-600 shadow-2xl active:text-black text-sm lg:text-xl' >
+                                                     see more
+                                                </button>   */}
+                <div className='flex w-5/12 p-3 m-auto text-black justify-between'
+                >
+
+
+                    <div className='text-white bg-gray-400 p-2 rounded active:text-green-500'
+                        onClick={() => { setcounter(counter > 0 ? counter - 1 : 0) }}
+                    >Previous</div>
+
+                    <Stack spacing={2}>
+                        {/* <Pagination count={10} shape="rounded" /> */}
+                        <Pagination onClick={() => { setcounter(limit) }} count={limit} variant="outlined" shape="rounded" />
+                    </Stack>
+
+                    {/* <div className='overflow-auto'
+                        onClick={() => { setcounter(limit) }}>last page {limit}</div> */}
+
+
+                    <div className='text-white bg-green-400 p-2 rounded active:text-green-500'
+                        onClick={() => { setcounter(counter + 1) }}
+
+                    >Next</div>
+
+                </div>
 
 
             </div>

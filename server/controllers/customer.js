@@ -107,9 +107,10 @@ class customerController {
 
   static getActivepaginatedjobs = async (req, res) => {
 
-   const Page_Size = 3;
-   const page = parseInt(req.query.page||"0")
-    const userLogin = await Postjob.find({JobActivation: "Active" }).limit(Page_Size).skip(Page_Size*page)
+    const Page_Size = 4;
+    console.log(req.query.page)
+    const page = parseInt(req.query.page || "0")
+    const userLogin = await Postjob.find({ JobActivation: "Active" }).limit(Page_Size).skip(Page_Size * page)
     if (userLogin) {
 
       res.send(userLogin)
@@ -117,18 +118,19 @@ class customerController {
     }
 
   }
+
   static getpaginatedjobs = async (req, res) => {
 
     const Page_Size = 5;
-    const page = parseInt(req.query.page||"0")
-     const userLogin = await Postjob.find().limit(Page_Size).skip(Page_Size*page)
-     if (userLogin) {
- 
-       res.send(userLogin)
-       console.log(userLogin.length)
-     }
- 
-   }
+    const page = parseInt(req.query.page || "0")
+    const userLogin = await Postjob.find().limit(Page_Size).skip(Page_Size * page)
+    if (userLogin) {
+
+      res.send(userLogin)
+      console.log(userLogin.length)
+    }
+
+  }
 
 
 
@@ -168,7 +170,7 @@ class customerController {
   }
 
 
-  
+
 
 
   static editProfile = async (req, res) => {
