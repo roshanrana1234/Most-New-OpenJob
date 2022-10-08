@@ -30,7 +30,7 @@ router.get('/statelist', adminController.statelist);
 router.get('/getUnderReviewjobs', authenticate, adminController.getUnderReviewjobs);
 router.get('/getActivejobs', authenticate, adminController.getActivejobs);
 router.get('/getExpiredjobs', authenticate, adminController.getExpiredjobs);
-router.get('/AutomaticAddtoExpired', adminController.AutomaticAddtoExpired);
+router.post('/AutomaticAddtoExpired', adminController.AutomaticAddtoExpired);
 
 
 export default router;

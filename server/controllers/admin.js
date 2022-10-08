@@ -128,11 +128,9 @@ class adminController {
   static AutomaticAddtoExpired = async (req, res) => {
 
     try {
-      // const { _id } = req.params
-
-      // console.log(_id)
+      
       const userLogin = await Postjob.find({ "updatedAt": { $lt: new Date(new Date().getTime() - (15 * 24 * 60 * 60 * 1000)) } })
-      // console.log(userLogin)
+      
 
 
       if (userLogin) {
@@ -140,13 +138,10 @@ class adminController {
 
         console.log(userLogin)
         for (let index = 0; index < userLogin.length; index++) {
-          const e = userLogin[index];
-          console.log(e.JobActivation)
-          console.log(e.updatedAt)
-
-
-          // const userNewProduct = await Product.findOneAndUpdate({JobActivation},{ $set: {JobActivation:'Expired'}})
-          // console.log(userNewProduct, "85")
+          const JobActivation = userLogin[index].JobActivation;
+         
+          const userNewProduct = await Product.findOneAndUpdate({JobActivation},{ $set: {JobActivation:'Expired'}})
+          console.log(userNewProduct, "85")
 
         }
 
