@@ -6,6 +6,7 @@ export const profileApi = createApi({
   reducerPath: 'profileApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:5000/api',
+    // https://4e5rr7.sse.codesandbox.io/
     // prepareHeaders(headers) {
     //   return headers;
     // },
