@@ -7,20 +7,23 @@ import logo from '../../images/main.png'
 import { BsSearch } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import { useUsergetActivejobsQuery } from '../../services/profile'
-import { useGetcitylistQuery, useGetstatelistQuery } from "../../services/profile";
+import { useGetcitylistQuery, useGetstatelistQuery ,useGetActivepaginatedjobsQuery} from "../../services/profile";
 
 import { Link } from 'react-router-dom';
 
 const UserJobFeed = () => {
+//    const {data:Data} = useGetActivepaginatedjobsQuery(counter)
+//    const [counter, setcounter] = useState(0)
+//    console.log(Data)
     const { data } = useUsergetActivejobsQuery()
     const { data: citylist } = useGetcitylistQuery()
     console.log("this is 11", data)
-    if (data) {
-        // console.log(data.data);
-        data.map((value) => {
-            console.log(value.Area);
-        })
-    }
+    // if (data) {
+        
+    //     data.map((value) => {
+    //         console.log(value.Area);
+    //     })
+    // }
 
 
     const [menu, setMenu] = useState(false)
@@ -245,7 +248,10 @@ const UserJobFeed = () => {
                                                 </button>
                                             </Link>
                                         </div>
-
+                                        {/* <button  onClick = {() => {setcounter(counter + 1)}}
+                                                  className='text-white p-2 px-6 rounded-lg font-bold bg-gray-600 shadow-2xl active:text-black text-sm lg:text-xl' >
+                                                     see more
+                                                </button>   */}
                                     </div>
 
 
@@ -253,9 +259,11 @@ const UserJobFeed = () => {
 
                             </div>
                         })
+                        
                     }
+                    
                 </div>
-
+                
 
 
 

@@ -199,7 +199,22 @@ export const profileApi = createApi({
       providesTags: (result, error, arg) => [{ type: 'Postjob', _id: arg._id }]
     }),
 
+    
 
+
+    
+    getActivepaginatedjobs: builder.query({
+      query: (num) => ({
+
+        url: `getActivepaginatedjobs?page=${num}`,
+        method: 'GET',
+        // headers: {
+        //   'authorization': `Bearer ${token}`,
+        // },
+        providesTags: ['User'],
+      })
+
+    }),
     // about: builder.query({
     //   query: (token) => ({
 
@@ -419,6 +434,7 @@ export const profileApi = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useGetActivepaginatedjobsQuery,
   useAddtoTerminateMutation,
   useAddtoUnderReviewMutation,
   useUsergetActivejobsQuery,

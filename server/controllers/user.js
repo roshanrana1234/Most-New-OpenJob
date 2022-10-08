@@ -211,6 +211,20 @@ class userController {
 
   }
 
+  // static getPaginatespostjobs = async (req, res) => {
+
+  //   const { _id } = req.user
+  //   const userLogin = await Postjob.find({ createdBy: _id })
+  //   if (userLogin) {
+
+  //     res.send(userLogin)
+  //     console.log(userLogin)
+  //   }
+
+  // }
+
+
+
 
   static deletejobbyid = async (req, res) => {
 
