@@ -144,6 +144,29 @@ class userController {
     }
   }
 
+  static addVerificationDetails = async (req, res) => {
+
+    try {
+     
+      const userLogin = await Postjob.findOne({ _id: req.user._id })
+      if (userLogin) {
+        //  console.log(userLogin._id)
+        //  console.log(req.user._id)
+        //  var objectAdress = { name,landmark,adress,pincode,locality,mobile,st,pjl}       
+        await Postjob.findByIdAndUpdate(req.user._id, { $push: { verification: req.body } })
+
+        res.send({ "status": "success", "message": "VerificationDetails saved" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data","message":"not saved" })
+    }
+  }
+
+
+
+
 
 
 

@@ -21,6 +21,10 @@ router.patch('/EditfirstfrombyId', authenticate, userController.EditfirstfrombyI
 
 router.patch('/editProfile', authenticate, userController.editProfile);
 router.post('/changeUserPassword', authenticate, userController.changeUserPassword);
+router.post('/addVerificationDetails', authenticate, userController.addVerificationDetails);
+
+
+
 
 //get request
 router.get('/test', userController.test);

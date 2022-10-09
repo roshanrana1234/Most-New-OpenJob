@@ -90,15 +90,15 @@ const PostjobSchema = new mongoose.Schema({
         type: String,
     },
 
-    sallareyMinuim: {
-        type: String,
-    },
-    sallareyMax: {
-        type: String,
-    },
-    sallareyAverage: {
-        type: String,
-    },
+    // sallareyMinuim: {
+    //     type: String,
+    // },
+    // sallareyMax: {
+    //     type: String,
+    // },
+    // sallareyAverage: {
+    //     type: String,
+    // },
 
     joiningFee: {
         type: String,
@@ -188,6 +188,19 @@ const PostjobSchema = new mongoose.Schema({
         enum: ["Call + whatsapp", "whatsapp", "whatsapp + website"]
     },
     createdBy: { type: String },
+
+
+
+    verification: [{
+        gst: { type: String },
+        pan: { type: String },
+        cin: { type: String },
+        udyan: { type: String },
+        fssai: { type: String },
+        license: { type: String }
+
+
+    }],
 
 
 },
