@@ -7,6 +7,8 @@ import initMB from 'messagebird';
 const messagebird = initMB('ZUcVDMrE8WjDTdP0h22BQfXdV');
 // process.env.SECRET_KEY
 import bcrypt from "bcryptjs";
+import Apllyjob from "../Schema/custumer.js/aplly.js";
+
 import Postjob from "../Schema/postjob.js";
 // import authenticate from "../middleware/authenticate.js";
 import jwt from 'jsonwebtoken';
@@ -251,6 +253,21 @@ class adminController {
 
   }
 
+
+  static getAllApplication = async (req, res) => {
+    
+    
+    // const Id =  req.user._id.toString()
+    // console.log(Id)
+    // const id = "633875f72e28a098d916600d"
+        const userLogin = await Apllyjob.find()
+        if (userLogin) {
+    
+          res.send(userLogin)
+          console.log(userLogin)
+        }
+    
+      }
 
   static editProfile = async (req, res) => {
 

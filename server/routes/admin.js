@@ -26,6 +26,8 @@ router.get('/admin/about', authenticate, adminController.about);
 router.get('/admin/getjobs', authenticate, adminController.getjobs);
 router.get('/citylist', adminController.citylist);
 router.get('/statelist', adminController.statelist);
+router.get('/getAllApplication', adminController.getAllApplication);
+
 
 router.get('/getUnderReviewjobs', authenticate, adminController.getUnderReviewjobs);
 router.get('/getActivejobs', authenticate, adminController.getActivejobs);

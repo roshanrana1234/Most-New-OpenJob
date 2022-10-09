@@ -215,6 +215,21 @@ class userController {
 
   }
 
+  static getapplication = async (req, res) => {
+    console.log(req.user._id)
+    
+    // const Id =  req.user._id.toString()
+    // console.log(Id)
+    // const id = "633875f72e28a098d916600d"
+        const userLogin = await Apllyjob.find({appliedTo:req.user._id})
+        if (userLogin) {
+    
+          res.send(userLogin)
+          console.log(userLogin)
+        }
+    
+      }
+
   // static getPaginatespostjobs = async (req, res) => {
 
   //   const { _id } = req.user

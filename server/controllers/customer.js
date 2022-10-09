@@ -37,12 +37,12 @@ class customerController {
         const lol = { phonenumber, fullname, email, password }
         const register = new UserSingup(lol)
         await register.save()
-        res.status(201).send({ message: "succesfull", "status": "succesfull" })
+        res.status(201).send({ message: "succesfull", "status": "success" })
       }
     }
     catch (error) {
       console.log(error)
-      return res.status(422).json({ error: "not found data" })
+      return res.status(422).json({ error: "not found data","status":"success" })
     }
   }
 
@@ -110,8 +110,12 @@ class customerController {
   }
 
   static getuserAppliedjobs = async (req, res) => {
+console.log(req.user._id)
 
-    const userLogin = await Apllyjob.find({'appliedTo':req.user_id})
+// const Id =  req.user._id.toString()
+// console.log(Id)
+// const id = "633875f72e28a098d916600d"
+    const userLogin = await Apllyjob.find({appliedBy:req.user._id})
     if (userLogin) {
 
       res.send(userLogin)
@@ -119,6 +123,9 @@ class customerController {
     }
 
   }
+
+
+  
 
   static getActivepaginatedjobs = async (req, res) => {
 

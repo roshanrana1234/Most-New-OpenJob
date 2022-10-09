@@ -26,6 +26,9 @@ router.post('/changeUserPassword', authenticate, userController.changeUserPasswo
 router.get('/test', userController.test);
 router.get('/getpostjobs', authenticate, userController.getpostjobs);
 router.get('/about', authenticate, userController.about);
+router.get('/getapplication', authenticate, userController.getapplication);
+
+
 //delete
 router.delete('/deletejobbyid/:_id', userController.deletejobbyid);
 
