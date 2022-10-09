@@ -27,7 +27,12 @@ class customerController {
           console.log(userLogin)
           res.status(201).send({ message: "number already register", "status": "failed", })
         }
-      }
+        if (userLogin) {
+          if (userLogin.email == email) {
+            console.log(userLogin)
+            res.status(201).send({ message: "email already register", "status": "failed", })
+          }
+      }}
       else {
         const lol = { phonenumber, fullname, email, password }
         const register = new UserSingup(lol)

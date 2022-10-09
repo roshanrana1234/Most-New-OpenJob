@@ -32,6 +32,11 @@ class adminController {
           console.log(userLogin)
           res.status(201).send({ message: "number already register", status: "failed" })
         }
+
+        if (userLogin.email == email) {
+          console.log(userLogin)
+          res.status(201).send({ message: "number email register", status: "failed" })
+        }
       }
       else {
         const lol = { phonenumber, fullname, email, password }
@@ -410,7 +415,7 @@ class adminController {
       const { phonenumber, password } = req.body
       console.log(req.body)
       if (!phonenumber || !password) {
-        return res.status(400).json({ error: "pls filled data" })
+        return res.status(400).json({ message: "pls filled data" })
       }
 
       const userLogin = await AdminSingup.findOne({ phonenumber: phonenumber });
@@ -425,10 +430,10 @@ class adminController {
         //     expires:new Date(Date.now() + 2589000000),
         //    httpOnly:true});
 
-        !isMatch ? res.status(400).send({ message: "error" }) : res.send({ "status": "success", "message": "Login Success", "token": token })
+        !isMatch ? res.status(400).send({ "status":"failed", message: "number or password wrong" }) : res.send({ "status": "success", "message": "Login Success", "token": token })
 
       }
-      else { res.status(400).send({ message: "filled invalid data" }) }
+      else { res.status(400).send({ message: "filled invalid data"  }) }
 
     } catch (error) {
       console.log(error);

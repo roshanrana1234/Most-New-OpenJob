@@ -21,25 +21,29 @@ class userController {
     try {
       const { phonenumber, fullname, email, password } = req.body;
 
-      console.log
+      console.log(req.body,"24")
       const userLogin = await Singup.findOne({ phonenumber: phonenumber });
       console.log(userLogin)
       if (userLogin) {
+        if (userLogin.email == email) {
+          console.log(userLogin)
+          res.status(201).send({ message: "email already register", "status": "failed", })
+        }
         if (userLogin.phonenumber == phonenumber) {
           console.log(userLogin)
-          res.status(201).send({ message: "number already register", "status": "success", })
+          res.status(201).send({ message: "number already register", "status": "failed", })
         }
       }
       else {
         const lol = { phonenumber, fullname, email, password }
         const register = new Singup(lol)
         await register.save()
-        res.status(201).send({ message: "succesfull", })
+        res.status(201).send({ message: "succesfull","status":"success" })
       }
     }
     catch (error) {
       console.log(error)
-      return res.status(422).json({ error: "not found data" })
+      return res.status(422).json({ message: "not found data" ,"status":"failed" })
     }
   }
 
