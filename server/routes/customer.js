@@ -26,6 +26,7 @@ router.get('/user/getActivejobs', customerController.getActivejobs);
 router.get('/getjobs', customerController.getjobs);
 router.get('/getActivepaginatedjobs', customerController.getActivepaginatedjobs);
 router.get('/getpaginatedjobs', customerController.getpaginatedjobs);
+router.get('/getuserAppliedjobs',authenticate, customerController.getuserAppliedjobs);
 
 
 //delete

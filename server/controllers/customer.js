@@ -104,6 +104,16 @@ class customerController {
 
   }
 
+  static getuserAppliedjobs = async (req, res) => {
+
+    const userLogin = await Apllyjob.find({'appliedTo':req.user_id})
+    if (userLogin) {
+
+      res.send(userLogin)
+      console.log(userLogin)
+    }
+
+  }
 
   static getActivepaginatedjobs = async (req, res) => {
 
