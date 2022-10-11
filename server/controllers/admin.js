@@ -135,9 +135,9 @@ class adminController {
   static AutomaticAddtoExpired = async (req, res) => {
 
     try {
-      
+
       const userLogin = await Postjob.find({ "updatedAt": { $lt: new Date(new Date().getTime() - (15 * 24 * 60 * 60 * 1000)) } })
-      
+
 
 
       if (userLogin) {
@@ -146,8 +146,8 @@ class adminController {
         console.log(userLogin)
         for (let index = 0; index < userLogin.length; index++) {
           const JobActivation = userLogin[index].JobActivation;
-         
-          const userNewProduct = await Product.findOneAndUpdate({JobActivation},{ $set: {JobActivation:'Expired'}})
+
+          const userNewProduct = await Product.findOneAndUpdate({ JobActivation }, { $set: { JobActivation: 'Expired' } })
           console.log(userNewProduct, "85")
 
         }
@@ -255,19 +255,19 @@ class adminController {
 
 
   static getAllApplication = async (req, res) => {
-    
-    
+
+
     // const Id =  req.user._id.toString()
     // console.log(Id)
     // const id = "633875f72e28a098d916600d"
-        const userLogin = await Apllyjob.find()
-        if (userLogin) {
-    
-          res.send(userLogin)
-          console.log(userLogin)
-        }
-    
-      }
+    const userLogin = await Apllyjob.find()
+    if (userLogin) {
+
+      res.send(userLogin)
+      console.log(userLogin)
+    }
+
+  }
 
   static editProfile = async (req, res) => {
 
@@ -365,7 +365,15 @@ class adminController {
       console.log(userLogin)
     }
   }
+  static getTerminatedjobs = async (req, res) => {
 
+    const userLogin = await Postjob.find({ JobActivation: "Terminated" })
+    if (userLogin) {
+
+      res.send(userLogin)
+      console.log(userLogin)
+    }
+  }
 
 
   static searchjobs = async (req, res) => {
@@ -447,10 +455,10 @@ class adminController {
         //     expires:new Date(Date.now() + 2589000000),
         //    httpOnly:true});
 
-        !isMatch ? res.status(400).send({ "status":"failed", message: "number or password wrong" }) : res.send({ "status": "success", "message": "Login Success", "token": token })
+        !isMatch ? res.status(400).send({ "status": "failed", message: "number or password wrong" }) : res.send({ "status": "success", "message": "Login Success", "token": token })
 
       }
-      else { res.status(400).send({ message: "filled invalid data"  }) }
+      else { res.status(400).send({ message: "filled invalid data" }) }
 
     } catch (error) {
       console.log(error);
