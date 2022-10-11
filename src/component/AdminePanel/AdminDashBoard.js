@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { MdArrowDropDown } from "react-icons/md";
+import { MdArrowDropDown, MdKeyboardArrowDown } from "react-icons/md";
 import { FaRegHandPointer } from "react-icons/fa";
 import { Link, Outlet } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
@@ -13,6 +13,7 @@ import logo from '../../images/main.png'
 const AdminDashBoard = () => {
     const [open, setopen] = useState(false)
     const [main, setMain] = useState(false)
+    const [jobs, setjobs] = useState(false)
     const hide = useRef()
 
     const navigate = useNavigate()
@@ -29,6 +30,10 @@ const AdminDashBoard = () => {
             }
         }
         document.addEventListener("mousedown", handler)
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        }
     }, []);
 
     return (
@@ -47,23 +52,34 @@ const AdminDashBoard = () => {
                     </div>
 
                     <div className='mt-8 font-semibold' >
-                        <ul>
-                            <NavLink
-                                className=' active:text-green-400 block px-4 py-2 hover:bbcolor rounded'
-                                to="adminealljob" >
-                                <li>All Post Job</li>
-                            </NavLink>
-                            <NavLink
-                                className='active:text-green-400 block px-4 py-2 hover:bbcolor rounded'
-                                to="admineunderreview" >
-                                <li>Under Review Jobs</li>
-                            </NavLink>
-                            <NavLink
-                                className='active:text-green-400 block px-4 py-2 hover:bbcolor rounded'
-                                to="admineactivatejob" >
-                                <li>Activated Jobs</li>
-                            </NavLink>
-                        </ul>
+                        <div>
+                            <div onClick={() => setjobs(!jobs)} className='flex py-2 px-4 w-full justify-between p-2 hover:bbcolor rounded border' >Jobs <span><MdKeyboardArrowDown /></span> </div>
+                            <div className={`border ${jobs ? "null" : "hidden"}`} >
+                                <NavLink
+                                    className=' active:text-green-400 block px-4 py-2 hover:bbcolor rounded'
+                                    to="adminealljob" >
+                                    <div>All Job</div>
+                                </NavLink>
+                                <NavLink
+                                    className='active:text-green-400 block px-4 py-2 hover:bbcolor rounded'
+                                    to="admineunderreview" >
+                                    <div>New Posted Jobs</div>
+                                </NavLink>
+                                <NavLink
+                                    className='active:text-green-400 block px-4 py-2 hover:bbcolor rounded'
+                                    to="admineactivatejob" >
+                                    <div>All active jobs</div>
+                                </NavLink>
+                                <NavLink
+                                    className='active:text-green-400 block px-4 py-2 hover:bbcolor rounded'
+                                    to="admineexpiredjob" >
+                                    <div>All Expired jobs</div>
+                                </NavLink>
+
+                            </div>
+                        </div>
+
+
                     </div>
                 </nav>
 
@@ -73,7 +89,7 @@ const AdminDashBoard = () => {
                         <button
                             onClick={() => setopen(!open)}
                             className='text-3xl lg:hidden ml-3 p-2 focus:outline-none focus:bg-white hover:bg-white hover:text-black active:bg-red-700' ><GiHamburgerMenu /></button>
-                        <div className='flex items-center justify-between w-full' >
+                        <div className='flex items-center justify-between w-full px-4' >
                             {/* <span className='text-2xl md:text-3xl text-white p-4 block font-bold'>
                                 OpenJob
                             </span> */}
@@ -115,7 +131,9 @@ const AdminDashBoard = () => {
                         </div>
                     </header>
                     <div className='bg-bgcolor h-screen overflow-hidden p-4 pb-20' >
-                        <Outlet />
+                        <div className='h-full overflow-auto text-black' >
+                            <Outlet />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -7,20 +7,33 @@ import logo from '../../images/main.png'
 import { BsSearch } from "react-icons/bs";
 import { ImCross } from "react-icons/im";
 import { useUsergetActivejobsQuery } from '../../services/profile'
-import { useGetcitylistQuery, useGetstatelistQuery } from "../../services/profile";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { useGetcitylistQuery, useGetstatelistQuery, useGetActivepaginatedjobsQuery } from "../../services/profile";
 
 import { Link } from 'react-router-dom';
 
 const UserJobFeed = () => {
-    const { data } = useUsergetActivejobsQuery()
+    //    const {data:Data} = useGetActivepaginatedjobsQuery(counter)
+
+    const [counter, setcounter] = useState(0)
+    console.log(counter, "counter")
+
+    const { data } = useGetActivepaginatedjobsQuery(counter)
+    const { data: Data } = useUsergetActivejobsQuery()
+    let limit = Math.round(Data?.length / 4)
+    console.log(limit, "limit");
+
+    // console.log(Data, "19")
+    // console.log(Data?.length, "20")
     const { data: citylist } = useGetcitylistQuery()
-    console.log("this is 11", data)
-    if (data) {
-        // console.log(data.data);
-        data.map((value) => {
-            console.log(value.Area);
-        })
-    }
+
+    // if (data) {
+
+    //     data.map((value) => {
+    //         console.log(value.Area);
+    //     })
+    // }
 
 
     const [menu, setMenu] = useState(false)
@@ -57,7 +70,7 @@ const UserJobFeed = () => {
             <div className='  rounded-xl mt-6 w-8/12 m-auto' >
                 <div className=' border-black  flex flex-col gap-4 lg:flex-row  justify-evenly items-center  p-4' >
 
-                    <div className=' w-full relative' ref={menuRef}  >
+                    {/* <div className=' w-full relative' ref={menuRef}  >
                         <input
                             placeholder='Select job type , keywords, or company'
                             className='p-3 w-full m-auto text-tcolor border rounded-xl text-sm font-semibold bg-white  '
@@ -89,52 +102,31 @@ const UserJobFeed = () => {
 
                             </ul>
                         </div>
+                    </div> */}
+
+                    <div className='w-full' >
+                        <select className='w-full p-2 rounded foucus:outline-none border' name="" id="">
+                            <option disabled value="">- city - </option>
+                            {citylist?.map((e) => {
+                                return <option value={e.name}
+                                    className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >{e.name}</option>
+                            })}
+                            <option value="">mumbai</option>
+                        </select>
                     </div>
 
-                    <div className='w-full relative' ref={menuRef1}  >
-                        <input
-                            placeholder='Select City'
-                            className='p-3 w-full m-auto text-tcolor border rounded-xl text-sm font-semibold bg-white  '
-                            type="search"
-                            onClick={() => setMenu1(!menu1)}
-                        />
-
-                        <div className={`${menu1 ? "null" : "hidden"} absolute top-full m-auto w-full bg-bgcolor z-0`} >
-                            <div className='text-tcolor font-bold bg-white text-lg flex justify-between p-4' >
-                                City
-                                <div onClick={() => setMenu1(!menu1)} >
-                                    <ImCross />
-                                </div>
-                            </div>
-                            <div className='flex items-center border bg-bgcolor border-gray-800' >
-                                <BsSearch className=' mx-4 ' />
-                                <input
-                                    placeholder='Type To Search...'
-                                    className='border  w-full  p-2 bg-bgcolor' type="search" />
-                            </div>
-                            <ul className='flex flex-col gap-3 bg-white my-4 max-h-44 overflow-auto shadow-xl border' >
-
-                                {citylist?.map((e) => {
-                                    return <li value={e.name} className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >{e.name}</li>
-                                })}
-                                {/* <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Ac Texhnician</li> */}
-                                {/* <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Accounts / Finance</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Admin / Offive Assistant</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Aircraft Maintainace</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Back Office</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Bank Office</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li>
-                                <li className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >Beautician / Hair Stylist</li> */}
-                            </ul>
-                        </div>
+                    <div className='w-full' >
+                        <select className='w-full p-2 rounded foucus:outline-none border' name="" id="">
+                            <option disabled value="">- city - </option>
+                            {citylist?.map((e) => {
+                                return <option value={e.name}
+                                    className='cursor:poiner hover:bg-primary hover:text-white w-full p-2 ' >{e.name}</option>
+                            })}
+                            <option value="">mumbai</option>
+                        </select>
                     </div>
+
+
 
                     <div className=' p-2 w-8/12 m-auto' >
                         <button className='text-white btncolor p-2 font-bold px-8 rounded border shadow w-full border-black' >Find Job</button>
@@ -142,16 +134,12 @@ const UserJobFeed = () => {
                 </div>
             </div >
 
-            {/* Post Your Resume */}
-            <div className='flex justify-center items-center' >
-                <button className='text-xl p-2 px-6 rounded bg-btncolor text-white font-bold border border-black shadow' >Post Your Resume</button>
-            </div>
 
-            <br />
-            <hr />
+
+
 
             <div>
-                <div className='flex justify-center items-center my-10' >
+                <div className='flex justify-center items-center bg-bgcolor' >
                     <Link to="/userpage/userfindjob" >
                         <button className=' rounded text-3xl text-black font-black flex gap-5 items-center' >
                             Job Feed
@@ -163,7 +151,7 @@ const UserJobFeed = () => {
 
 
 
-            <div className='bg-[#FAF9F8] p-4' >
+            <div className='bg-bgcolor p-4' >
                 <div className='text-center p-4' >
                     Jobs based on your activity on Indeed • Updated 20 min ago
                 </div>
@@ -245,18 +233,46 @@ const UserJobFeed = () => {
                                                 </button>
                                             </Link>
                                         </div>
-
                                     </div>
 
 
                                 </div>
 
+
                             </div>
                         })
+
                     }
+
                 </div>
 
+                {/* <button  onClick = {() => {setcounter(counter + 1)}}
+                                                  className='text-white p-2 px-6 rounded-lg font-bold bg-gray-600 shadow-2xl active:text-black text-sm lg:text-xl' >
+                                                     see more
+                                                </button>   */}
+                <div className='flex w-5/12 p-3 m-auto text-black justify-between'
+                >
 
+
+                    <div className='text-white bg-gray-400 p-2 rounded active:text-green-500'
+                        onClick={() => { setcounter(counter > 0 ? counter - 1 : 0) }}
+                    >Previous</div>
+
+                    <Stack spacing={2}>
+                        {/* <Pagination count={10} shape="rounded" /> */}
+                        <Pagination onClick={() => { setcounter(limit) }} count={limit} variant="outlined" shape="rounded" />
+                    </Stack>
+
+                    {/* <div className='overflow-auto'
+                        onClick={() => { setcounter(limit) }}>last page {limit}</div> */}
+
+
+                    <div className='text-white bg-green-400 p-2 rounded active:text-green-500'
+                        onClick={() => { setcounter(counter + 1) }}
+
+                    >Next</div>
+
+                </div>
 
 
             </div>

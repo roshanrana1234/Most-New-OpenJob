@@ -127,6 +127,8 @@ const ApplyJob = () => {
                                 <div>Enter full name</div>
                                 <div>
                                     <input
+                                        required
+                                        minLength="3"
                                         onChange={(e) => setfullName(e.target.value)}
                                         name='fullName'
                                         type="text" className='w-full border rounded p-2' />
@@ -137,7 +139,7 @@ const ApplyJob = () => {
                                 <div>
                                     <input
                                         onChange={(e) => setEmail(e.target.value)}
-
+                                        required
                                         name='Email'
                                         type="email" className='w-full border rounded p-2' />
                                 </div>
@@ -147,6 +149,9 @@ const ApplyJob = () => {
                                 <div>number</div>
                                 <div>
                                     <input
+                                        required
+                                        minLength="10"
+                                        maxLength="10"
                                         onChange={(e) => setnumber(e.target.value)}
                                         name='number'
                                         type="tel" className='w-full border rounded p-2' />
@@ -192,6 +197,7 @@ const ApplyJob = () => {
                                 <div className='text-xl font-bold ' >resume</div>
                                 <div>
                                     <input
+                                        required
                                         accept="doc/*"
                                         onChange={(e) => setresume(e.target.files[0])}
                                         name='resume'

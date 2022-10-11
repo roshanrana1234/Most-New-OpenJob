@@ -1,10 +1,14 @@
 
 // import AdminSingup from "../Schema/AdminSingup.js";
+
+
 import AdminSingup from "../Schema/admin/singup.js";
 import initMB from 'messagebird';
 const messagebird = initMB('ZUcVDMrE8WjDTdP0h22BQfXdV');
 // process.env.SECRET_KEY
 import bcrypt from "bcryptjs";
+import Apllyjob from "../Schema/custumer.js/aplly.js";
+
 import Postjob from "../Schema/postjob.js";
 // import authenticate from "../middleware/authenticate.js";
 import jwt from 'jsonwebtoken';
@@ -29,6 +33,11 @@ class adminController {
         if (userLogin.phonenumber == phonenumber) {
           console.log(userLogin)
           res.status(201).send({ message: "number already register", status: "failed" })
+        }
+
+        if (userLogin.email == email) {
+          console.log(userLogin)
+          res.status(201).send({ message: "number email register", status: "failed" })
         }
       }
       else {
@@ -68,7 +77,7 @@ class adminController {
   //   catch (error) {
   //     console.log(error)
   //     return res.status(422).json({ error: "not found data" })
-  //   }
+  //   };
   // }
 
 
@@ -98,43 +107,117 @@ class adminController {
   }
 
 
+  static addtoExpired = async (req, res) => {
+
+    try {
+      const { _id } = req.params
+
+      console.log(_id)
+      const userLogin = await Postjob.findOne({ _id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Postjob.findByIdAndUpdate(_id, { $set: { JobActivation: 'Expired', } })
+        res.send({ "status": "success", "message": "Expired succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
 
 
-  // static register = async (req, res) => {
 
-  //   try {
-  //     //   const {name,email,password,cpassword,work,mobile,role} = req.body;
-  //     const {phonenumber,name,email,role} = req.body;
+  static AutomaticAddtoExpired = async (req, res) => {
 
-
-  //     const register = new AdminSingup(req.body)
-  //     await register.save()
-
-  //     res.status(201).send({ message: "succesfull", })
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //     return res.status(422).json({ error: "not found data" })
-  //   }
-  // }
+    try {
+      
+      const userLogin = await Postjob.find({ "updatedAt": { $lt: new Date(new Date().getTime() - (15 * 24 * 60 * 60 * 1000)) } })
+      
 
 
-  // static Postjob = async (req, res) => {
+      if (userLogin) {
 
-  //   try {
-  //     //   const {name,email,password,cpassword,work,mobile,role} = req.body;
-  //     let lol = { ...req.body, createdBy: req.user._id }
-  //     console.log(lol)
-  //     const register = new Postjob(lol)
-  //     await register.save()
 
-  //     res.status(201).send({ message: " job  post succesfull", })
-  //   }
-  //   catch (error) {
-  //     console.log(error)
-  //     return res.status(422).json({ error: "not found data" })
-  //   }
-  // }
+        console.log(userLogin)
+        for (let index = 0; index < userLogin.length; index++) {
+          const JobActivation = userLogin[index].JobActivation;
+         
+          const userNewProduct = await Product.findOneAndUpdate({JobActivation},{ $set: {JobActivation:'Expired'}})
+          console.log(userNewProduct, "85")
+
+        }
+
+        // await Postjob.findByIdAndUpdate(_id, { $set: { JobActivation: 'Expired', } })
+        res.send({ "status": "success", "message": "Expired succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+
+
+  static addtoUnderReview = async (req, res) => {
+
+    try {
+      const { _id } = req.params
+
+      console.log(_id)
+      const userLogin = await Postjob.findOne({ _id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Postjob.findByIdAndUpdate(_id, { $set: { JobActivation: "under review", } })
+        res.send({ "status": "success", "message": "Expired succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+
+
+  static addtoTerminate = async (req, res) => {
+
+    try {
+      const { _id } = req.params
+
+      console.log(_id)
+      const userLogin = await Postjob.findOne({ _id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Postjob.findByIdAndUpdate(_id, { $set: { JobActivation: "Terminated", } })
+        res.send({ "status": "success", "message": "Expired succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
 
 
 
@@ -171,6 +254,88 @@ class adminController {
   }
 
 
+  static getAllApplication = async (req, res) => {
+    
+    
+    // const Id =  req.user._id.toString()
+    // console.log(Id)
+    // const id = "633875f72e28a098d916600d"
+        const userLogin = await Apllyjob.find()
+        if (userLogin) {
+    
+          res.send(userLogin)
+          console.log(userLogin)
+        }
+    
+      }
+
+  static editProfile = async (req, res) => {
+
+    try {
+      const { fullname, phonenumber, email } = req.body
+
+      // if (password && password_confirmation) {
+      //   if (password !== password_confirmation) {
+      //     res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+      //   }
+      const userLogin = await Singup.findOne({ _id: req.user._id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Singup.findByIdAndUpdate(req.user._id, { $set: { fullname: fullname, phonenumber: phonenumber, email: email } })
+        res.send({ "status": "success", "message": "Profile changed succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+
+
+  static changeUserPassword = async (req, res) => {
+
+    try {
+      const { password, password_confirmation, Oldpassword } = req.body
+
+      if (password && password_confirmation) {
+        if (password !== password_confirmation) {
+          res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+        }
+        const userLogin = await AdminSingup.findOne({ _id: req.user._id })
+        console.log(userLogin)
+        if (userLogin) {
+          //  console.log(userLogin._id)
+          // console.log(req.user._id)
+
+          const isMatch = await bcrypt.compare(Oldpassword, userLogin.password)
+          if (isMatch) {
+            const salt = await bcrypt.genSalt(10)
+            const newHashPassword = await bcrypt.hash(password, salt)
+            await AdminSingup.findByIdAndUpdate(req.user._id, { $set: { password: newHashPassword } })
+            res.send({ "status": "success", "message": "Password changed succesfully" })
+          }
+        }
+
+        else {
+          res.send({ "status": "failed", "message": "All Fields are Required" })
+        }
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+
+
 
   static getUnderReviewjobs = async (req, res) => {
 
@@ -185,6 +350,15 @@ class adminController {
   static getActivejobs = async (req, res) => {
 
     const userLogin = await Postjob.find({ JobActivation: "Active" })
+    if (userLogin) {
+
+      res.send(userLogin)
+      console.log(userLogin)
+    }
+  }
+  static getExpiredjobs = async (req, res) => {
+
+    const userLogin = await Postjob.find({ JobActivation: "Expired" })
     if (userLogin) {
 
       res.send(userLogin)
@@ -258,7 +432,7 @@ class adminController {
       const { phonenumber, password } = req.body
       console.log(req.body)
       if (!phonenumber || !password) {
-        return res.status(400).json({ error: "pls filled data" })
+        return res.status(400).json({ message: "pls filled data" })
       }
 
       const userLogin = await AdminSingup.findOne({ phonenumber: phonenumber });
@@ -273,10 +447,10 @@ class adminController {
         //     expires:new Date(Date.now() + 2589000000),
         //    httpOnly:true});
 
-        !isMatch ? res.status(400).send({ message: "error" }) : res.send({ "status": "success", "message": "Login Success", "token": token })
+        !isMatch ? res.status(400).send({ "status":"failed", message: "number or password wrong" }) : res.send({ "status": "success", "message": "Login Success", "token": token })
 
       }
-      else { res.status(400).send({ message: "filled invalid data" }) }
+      else { res.status(400).send({ message: "filled invalid data"  }) }
 
     } catch (error) {
       console.log(error);

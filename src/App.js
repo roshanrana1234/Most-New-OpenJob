@@ -3,9 +3,11 @@ import { Route, Routes } from 'react-router-dom'
 import AdminAllJob from './component/AdminePanel/AdminAllJob'
 import AdminDashBoard from './component/AdminePanel/AdminDashBoard'
 import AdmineActivatedJob from './component/AdminePanel/AdmineActivatedJob'
+import AdmineAllExpiredJobs from './component/AdminePanel/AdmineAllExpiredJobs'
 import AdmineLogin from './component/AdminePanel/AdmineLogin'
 import AdmineRLogin from './component/AdminePanel/AdmineRLogin'
 import AdmineUnderReview from './component/AdminePanel/AdmineUnderReview'
+import AdminViewDetail from './component/AdminePanel/AdminViewDetail'
 import ApplyJob from './component/ApplyJob'
 import DownloadApplicants from './component/DownloadApplicants'
 import FirstFrom from './component/FirstFrom'
@@ -68,6 +70,8 @@ const App = () => {
         <Route exact path='/' element={<Home />} />
         <Route exact path='firstform' element={<FirstFrom />} />
 
+
+
         <Route exact path='newuser' element={<NewUser />} >
           <Route index element={<NewLand />} />
           <Route exact path='postjob' element={<MultiStepper />} />
@@ -101,8 +105,15 @@ const App = () => {
           <Route exact path='adminealljob' element={<AdminAllJob />} />
           <Route exact path='admineunderreview' element={<AdmineUnderReview />} />
           <Route exact path='admineactivatejob' element={<AdmineActivatedJob />} />
+          <Route exact path='admineexpiredjob' element={<AdmineAllExpiredJobs />} />
+          <Route exact path='/adminedashboard/detail/:adminVID' element={<AdminViewDetail />} />
         </Route>
 
+        {/* 1). All Jobs
+a). New Posted Jobs
+b). all active jobs
+c). all deactive jobs
+d). all expired jobs */}
         {/* Admine Dashboard End Here */}
 
 

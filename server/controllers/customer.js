@@ -27,17 +27,22 @@ class customerController {
           console.log(userLogin)
           res.status(201).send({ message: "number already register", "status": "failed", })
         }
-      }
+        if (userLogin) {
+          if (userLogin.email == email) {
+            console.log(userLogin)
+            res.status(201).send({ message: "email already register", "status": "failed", })
+          }
+      }}
       else {
         const lol = { phonenumber, fullname, email, password }
         const register = new UserSingup(lol)
         await register.save()
-        res.status(201).send({ message: "succesfull", "status": "succesfull" })
+        res.status(201).send({ message: "succesfull", "status": "success" })
       }
     }
     catch (error) {
       console.log(error)
-      return res.status(422).json({ error: "not found data" })
+      return res.status(422).json({ error: "not found data","status":"success" })
     }
   }
 
@@ -104,6 +109,53 @@ class customerController {
 
   }
 
+  static getuserAppliedjobs = async (req, res) => {
+console.log(req.user._id)
+
+// const Id =  req.user._id.toString()
+// console.log(Id)
+// const id = "633875f72e28a098d916600d"
+    const userLogin = await Apllyjob.find({appliedBy:req.user._id})
+    if (userLogin) {
+
+      res.send(userLogin)
+      console.log(userLogin)
+    }
+
+  }
+
+
+  
+
+  static getActivepaginatedjobs = async (req, res) => {
+
+    const Page_Size = 4;
+    console.log(req.query.page)
+    const page = parseInt(req.query.page || "0")
+    const userLogin = await Postjob.find({ JobActivation: "Active" }).limit(Page_Size).skip(Page_Size * page)
+    if (userLogin) {
+
+      res.send(userLogin)
+      console.log(userLogin.length)
+    }
+
+  }
+
+  static getpaginatedjobs = async (req, res) => {
+
+    const Page_Size = 5;
+    const page = parseInt(req.query.page || "0")
+    const userLogin = await Postjob.find().limit(Page_Size).skip(Page_Size * page)
+    if (userLogin) {
+
+      res.send(userLogin)
+      console.log(userLogin.length)
+    }
+
+  }
+
+
+
   static getjobsbyId = async (req, res) => {
 
     const { _id } = req.params
@@ -141,6 +193,35 @@ class customerController {
 
 
 
+
+
+  static editProfile = async (req, res) => {
+
+    try {
+      const { fullname, phonenumber, email } = req.body
+
+      // if (password && password_confirmation) {
+      //   if (password !== password_confirmation) {
+      //     res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+      //   }
+      const userLogin = await Singup.findOne({ _id: req.user._id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Singup.findByIdAndUpdate(req.user._id, { $set: { fullname: fullname, phonenumber: phonenumber, email: email } })
+        res.send({ "status": "success", "message": "Profile changed succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
   static searchjobs = async (req, res) => {
 
     const { typeOfJob, jobcity } = req.body
@@ -164,6 +245,43 @@ class customerController {
     }
 
   }
+
+
+  static changeUserPassword = async (req, res) => {
+
+    try {
+      const { password, password_confirmation, Oldpassword } = req.body
+
+      if (password && password_confirmation) {
+        if (password !== password_confirmation) {
+          res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+        }
+        const userLogin = await UserSingup.findOne({ _id: req.user._id })
+        console.log(userLogin)
+        if (userLogin) {
+          //  console.log(userLogin._id)
+          // console.log(req.user._id)
+
+          const isMatch = await bcrypt.compare(Oldpassword, userLogin.password)
+          if (isMatch) {
+            const salt = await bcrypt.genSalt(10)
+            const newHashPassword = await bcrypt.hash(password, salt)
+            await UserSingup.findByIdAndUpdate(req.user._id, { $set: { password: newHashPassword } })
+            res.send({ "status": "success", "message": "Password changed succesfully" })
+          }
+        }
+
+        else {
+          res.send({ "status": "failed", "message": "All Fields are Required" })
+        }
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
 
   // console.log(req.user.role,"529")
   //   res.send({"user":req.user}) 

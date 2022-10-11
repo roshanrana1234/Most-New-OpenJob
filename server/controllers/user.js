@@ -21,25 +21,29 @@ class userController {
     try {
       const { phonenumber, fullname, email, password } = req.body;
 
-      console.log
+      console.log(req.body,"24")
       const userLogin = await Singup.findOne({ phonenumber: phonenumber });
       console.log(userLogin)
       if (userLogin) {
+        if (userLogin.email == email) {
+          console.log(userLogin)
+          res.status(201).send({ message: "email already register", "status": "failed", })
+        }
         if (userLogin.phonenumber == phonenumber) {
           console.log(userLogin)
-          res.status(201).send({ message: "number already register", "status": "success", })
+          res.status(201).send({ message: "number already register", "status": "failed", })
         }
       }
       else {
         const lol = { phonenumber, fullname, email, password }
         const register = new Singup(lol)
         await register.save()
-        res.status(201).send({ message: "succesfull", })
+        res.status(201).send({ message: "succesfull","status":"success" })
       }
     }
     catch (error) {
       console.log(error)
-      return res.status(422).json({ error: "not found data" })
+      return res.status(422).json({ message: "not found data" ,"status":"failed" })
     }
   }
 
@@ -50,6 +54,7 @@ class userController {
     try {
       //   const {name,email,password,cpassword,work,mobile,role} = req.body;
       let lol = { ...req.body, createdBy: req.user._id }
+
       console.log(lol)
       const register = new Postjob(lol)
       await register.save()
@@ -139,6 +144,29 @@ class userController {
     }
   }
 
+  static addVerificationDetails = async (req, res) => {
+
+    try {
+     
+      const userLogin = await Postjob.findOne({ _id: req.user._id })
+      if (userLogin) {
+        //  console.log(userLogin._id)
+        //  console.log(req.user._id)
+        //  var objectAdress = { name,landmark,adress,pincode,locality,mobile,st,pjl}       
+        await Postjob.findByIdAndUpdate(req.user._id, { $push: { verification: req.body } })
+
+        res.send({ "status": "success", "message": "VerificationDetails saved" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data","message":"not saved" })
+    }
+  }
+
+
+
+
 
 
 
@@ -210,6 +238,35 @@ class userController {
 
   }
 
+  static getapplication = async (req, res) => {
+    console.log(req.user._id)
+    
+    // const Id =  req.user._id.toString()
+    // console.log(Id)
+    // const id = "633875f72e28a098d916600d"
+        const userLogin = await Apllyjob.find({appliedTo:req.user._id})
+        if (userLogin) {
+    
+          res.send(userLogin)
+          console.log(userLogin)
+        }
+    
+      }
+
+  // static getPaginatespostjobs = async (req, res) => {
+
+  //   const { _id } = req.user
+  //   const userLogin = await Postjob.find({ createdBy: _id })
+  //   if (userLogin) {
+
+  //     res.send(userLogin)
+  //     console.log(userLogin)
+  //   }
+
+  // }
+
+
+
 
   static deletejobbyid = async (req, res) => {
 
@@ -222,6 +279,137 @@ class userController {
     }
 
   }
+
+
+  static editProfile = async (req, res) => {
+
+    try {
+      const { fullname, phonenumber, email } = req.body
+
+      // if (password && password_confirmation) {
+      //   if (password !== password_confirmation) {
+      //     res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+      //   }
+      const userLogin = await Singup.findOne({ _id: req.user._id })
+      // console.log(userLogin)
+
+      if (userLogin) {
+        await Singup.findByIdAndUpdate(req.user._id, { $set: { fullname: fullname, phonenumber: phonenumber, email: email } })
+        res.send({ "status": "success", "message": "Profile changed succesfully" })
+      }
+      else {
+        res.send({ "status": "failed", "message": "All Fields are Required" })
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+  static EditfirstfrombyId = async (req, res) => {
+
+    try {
+
+      const { companyName, companyWeb, employeesNumber } = req.body;
+      const { _id } = req.params;
+      console.log("rid", _id);
+
+
+      const userLogin = await Singup.findOne({ _id: req.user._id })
+      if (userLogin) {
+
+
+        const ram = await Singup.findOneAndUpdate(
+          { "firstfrom": { "$elemMatch": { _id: _id } } },
+          {
+            $set: {
+              "adress.$.companyName": companyName,
+              "adress.$.companyWeb": companyWeb,
+              "adress.$.employeesNumber": employeesNumber,
+              // "adress.$.pincode": pincode,
+              // "adress.$.locality": locality,
+              // "adress.$.mobile": mobile,
+
+            }
+          },
+        )
+        res.send({ "status": "success", "message": "adress saved", 'adress': userLogin.adress })
+
+
+      }
+    } catch (error) {
+
+      console.log("error" + error.message);
+    }
+  }
+
+
+  static changeUserPassword = async (req, res) => {
+
+    try {
+      const { password, password_confirmation, Oldpassword } = req.body
+
+      if (password && password_confirmation) {
+        if (password !== password_confirmation) {
+          res.send({ "status": "failed", "message": "New Password and Confirm New Password doesn't match" })
+        }
+        const userLogin = await Singup.findOne({ _id: req.user._id })
+        console.log(userLogin)
+        if (userLogin) {
+          //  console.log(userLogin._id)
+          // console.log(req.user._id)
+
+          const isMatch = await bcrypt.compare(Oldpassword, userLogin.password)
+          if (isMatch) {
+            const salt = await bcrypt.genSalt(10)
+            const newHashPassword = await bcrypt.hash(password, salt)
+            await Singup.findByIdAndUpdate(req.user._id, { $set: { password: newHashPassword } })
+            res.send({ "status": "success", "message": "Password changed succesfully" })
+          }
+        }
+
+        else {
+          res.send({ "status": "failed", "message": "All Fields are Required" })
+        }
+      }
+    }
+    catch (error) {
+      console.log(error)
+      return res.status(422).json({ error: "not found data" })
+    }
+  }
+
+
+
+  static editjobbyid = function (req, res) {
+
+    console.log(req.body);
+    const { _id } = req.body
+
+    Postjob.findByIdAndUpdate(_id, { $set: req.body }, { new: true }, function (err, result) {
+      if (err) {
+        console.log(err);
+      }
+      console.log("RESULT: " + result);
+      res.send('Done')
+    });
+  };
+
+
+  static editjobbyid = async (req, res) => {
+
+    const { _id } = req.params
+    const userLogin = await Postjob.findByIdAndUpadet({ _id })
+    if (userLogin) {
+
+      // res.send(userLogin)
+      console.log(userLogin)
+    }
+
+  }
+
 
 
 

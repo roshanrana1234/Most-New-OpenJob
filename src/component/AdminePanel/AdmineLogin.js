@@ -27,7 +27,7 @@ const AdmineLogin = () => {
                         <div className='hidden lg:block' >
                             <div>
                                 <div className='text-[#4D3951] font-bold text-4xl' >
-                                    Hire Staff in 48 hours.
+                                    Hire Staff in 24 to 48 hours.
                                     <span className='text-[#2BB793] font-bold text-4xl' > FOR FREE</span>
                                 </div>
                             </div>
@@ -39,7 +39,7 @@ const AdmineLogin = () => {
                     </div>
 
                     <div className='flex justify-center items-center text-gray-700 font-bold mt-10' >
-                        2,00,000+ Top Companies Trust Apna
+                        200 Top Companies Trust OpenJOb
                     </div>
 
                 </div>

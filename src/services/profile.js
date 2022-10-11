@@ -6,6 +6,7 @@ export const profileApi = createApi({
   reducerPath: 'profileApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'http://localhost:5000/api',
+    // https://4e5rr7.sse.codesandbox.io/
     // prepareHeaders(headers) {
     //   return headers;
     // },
@@ -128,10 +129,58 @@ export const profileApi = createApi({
       }), invalidatesTags: ['Postjob'],
     }),
 
+
     Activatejob: builder.mutation({
       query: ({ _id, token }) => ({
 
         url: `/admin/Activatejob/${_id}`,
+
+        method: 'PATCH',
+
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }), invalidatesTags: ['Postjob'],
+    }),
+
+    addtoUnderReview: builder.mutation({
+      query: ({ adminVID, token }) => ({
+
+        url: `/admin/addtoUnderReview/${adminVID}`,
+
+        method: 'PATCH',
+
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }), invalidatesTags: ['Postjob'],
+    }),
+
+    // admin/addtoExpired
+
+
+    adminaddtoExpired: builder.mutation({
+      query: ({ adminVID, token }) => ({
+
+        url: `/admin/addtoExpired/${adminVID}`,
+
+        method: 'PATCH',
+
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }), invalidatesTags: ['Postjob'],
+    }),
+
+
+
+    addtoTerminate: builder.mutation({
+      query: ({ adminVID, token }) => ({
+
+        url: `/admin/addtoTerminate/${adminVID}`,
 
         method: 'PATCH',
 
@@ -171,6 +220,23 @@ export const profileApi = createApi({
     }),
 
 
+
+
+
+    getActivepaginatedjobs: builder.query({
+      query: (counter) => ({
+
+
+        url: `getActivepaginatedjobs?page=${counter}`,
+        // getActivepaginatedjobs?page=1
+        method: 'GET',
+        // headers: {
+        //   'authorization': `Bearer ${token}`,
+        // },
+        providesTags: ['Postjob'],
+      })
+
+    }),
     // about: builder.query({
     //   query: (token) => ({
 
@@ -229,6 +295,7 @@ export const profileApi = createApi({
       providesTags: ['Postjob'],
     }),
 
+
     getjobs: builder.query({
       query: () => ({
 
@@ -239,6 +306,22 @@ export const profileApi = createApi({
       }),
       providesTags: ['Postjob'],
     }),
+
+
+    admingetjobs: builder.query({
+      query: (token) => ({
+
+        url: `admin/getjobs`,
+        method: 'GET',
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }),
+      providesTags: ['Postjob'],
+    }),
+
+
 
 
     getActivejobs: builder.query({
@@ -260,6 +343,19 @@ export const profileApi = createApi({
       query: (token) => ({
 
         url: `getUnderReviewjobs`,
+        method: 'GET',
+        headers: {
+          'authorization': `Bearer ${token}`,
+        },
+
+      }),
+      providesTags: ['Postjob'],
+    }),
+
+    getExpiredjobs: builder.query({
+      query: (token) => ({
+
+        url: `getExpiredjobs`,
         method: 'GET',
         headers: {
           'authorization': `Bearer ${token}`,
@@ -373,6 +469,11 @@ export const profileApi = createApi({
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
+  useAdminaddtoExpiredMutation,
+  useGetExpiredjobsQuery,
+  useGetActivepaginatedjobsQuery,
+  useAddtoTerminateMutation,
+  useAddtoUnderReviewMutation,
   useUsergetActivejobsQuery,
   useGetActivejobsQuery,
   useGetUnderReviewjobsQuery,
@@ -397,5 +498,6 @@ export const {
   useGetstatelistQuery,
   useAdminloginMutation,
   useDeleteStarbyIdMutation,
+  useAdmingetjobsQuery,
 
 } = profileApi;
