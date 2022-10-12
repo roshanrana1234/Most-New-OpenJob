@@ -10,6 +10,11 @@ import AdmineUnderReview from './component/AdminePanel/AdmineUnderReview'
 import AdminViewDetail from './component/AdminePanel/AdminViewDetail'
 import ApplyJob from './component/ApplyJob'
 import DownloadApplicants from './component/DownloadApplicants'
+import AppliedJobPostDetail from './component/Employ/AppliedJobPostDetail'
+import NotRelavent from './component/Employ/NotRelavent'
+import Reviewed from './component/Employ/Reviewed'
+import ReviewPending from './component/Employ/ReviewPending'
+import ViewPostedJob from './component/Employ/ViewPostedJob'
 import FirstFrom from './component/FirstFrom'
 import Footer from './component/Footer'
 import Home from './component/Home'
@@ -70,13 +75,18 @@ const App = () => {
         <Route exact path='/' element={<Home />} />
         <Route exact path='firstform' element={<FirstFrom />} />
 
-
-
         <Route exact path='newuser' element={<NewUser />} >
           <Route index element={<NewLand />} />
           <Route exact path='postjob' element={<MultiStepper />} />
           <Route exact path='profile' element={<Profile />} />
           <Route exact path='downloadapplicants' element={<DownloadApplicants />} />
+          <Route exact path='/newuser/viewjob/:postedId' element={<ViewPostedJob />} >
+            <Route exact path='reviewpending' element={<ReviewPending />} />
+            <Route index element={<ReviewPending />} />
+            <Route exact path='reviewed' element={<Reviewed />} />
+            <Route exact path='notrelavent' element={<NotRelavent />} />
+            <Route exact path='postjobdetail' element={<AppliedJobPostDetail />} />
+          </Route>
         </Route>
         {/* Main ends */}
 

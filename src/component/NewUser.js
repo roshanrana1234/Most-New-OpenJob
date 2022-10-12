@@ -116,9 +116,11 @@ const NewUser = () => {
                                             </button>
                                         </div>
                                         <div className='flex gap-4' >
-                                            <button className='p-2 text-white font-bold px-5 rounded bg-btncolor' >
-                                                View
-                                            </button>
+                                            <Link to={`/newuser/viewjob/${_id}`} >
+                                                <button className='p-2 text-white font-bold px-5 rounded bg-btncolor' >
+                                                    View
+                                                </button>
+                                            </Link>
                                             {/* <button className='p-2 text-white font-bold px-5 rounded bg-red-500' onClick={() => deletepost({ token, _id })}  >
                                                 Delete
 
