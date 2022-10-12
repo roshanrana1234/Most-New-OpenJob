@@ -10,9 +10,12 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import logo from '../images/main.png'
 import { useGetDetailsQuery } from '../services/profile';
 import { useGetpostjobsQuery, useDeletejobbyidMutation } from '../services/profile';
+import PopUpVarifivation from './PopUp/PopUpVarifivation';
 
 
 const NewUser = () => {
+    const [lenaDena, setLenaDena] = useState(false)
+    const handleOnClose = () => setLenaDena(false)
     let token = getToken('token')
     const { data: Data } = useGetpostjobsQuery(token)
 
@@ -88,6 +91,7 @@ const NewUser = () => {
                                 <Link to="postjob" className='p-3' >
                                     <button className='bg-btncolor border active:text-black w-full p-2 rounded text-white font-bold ' >Post a Job</button>
                                 </Link>
+                                <button className='text-white' onClick={() => setLenaDena(true)} > PopUp</button>
 
                             </div>
                         </div>
@@ -135,6 +139,7 @@ const NewUser = () => {
 
                 </div>
             </div>
+            <PopUpVarifivation onClose={handleOnClose} visible={lenaDena} />
         </>
     )
 }

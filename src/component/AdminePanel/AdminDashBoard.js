@@ -10,10 +10,13 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdArrowDropleftCircle } from "react-icons/io";
 import logo from '../../images/main.png'
+
 const AdminDashBoard = () => {
     const [open, setopen] = useState(false)
     const [main, setMain] = useState(false)
     const [jobs, setjobs] = useState(false)
+
+
     const hide = useRef()
 
     const navigate = useNavigate()
@@ -137,6 +140,7 @@ const AdminDashBoard = () => {
                     </div>
                 </div>
             </div>
+
         </>
     )
 }

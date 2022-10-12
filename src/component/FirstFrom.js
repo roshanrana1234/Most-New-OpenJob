@@ -7,9 +7,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { getToken, removeToken } from '../services/LocalStorage';
 // import { getToken, storeToken } from '../services/LocalStorage';
 import { useGetDetailsQuery } from '../services/profile';
-
 import { useAddFirstDetailsMutation } from '../services/profile'
-
 
 const CssTextField = styled(TextField)({
     '& label.Mui-focused': {
@@ -43,13 +41,8 @@ const FirstFrom = () => {
         msg: "",
         type: ""
     })
-
     const navigate = useNavigate();
-
-
-
     const [hiringFor, sethiringFor] = useState();
-
     const [companyName, setcompanyName] = useState();
     const [companyWeb, setcompanyWeb] = useState();
     const [employeesNumber, setemployeesNumber] = useState();
@@ -80,26 +73,18 @@ const FirstFrom = () => {
 
                 console.log(res?.data?.status)
                 setError({ status: true, msg: res.data.message, type: 'success' })
-
             }
         }
     }
-
     let token = getToken('token')
     const { data } = useGetDetailsQuery(token)
     if (data) {
         console.log(data?.user?.firstfrom.length
-
-
         )
-
         if (data?.user?.firstfrom.length > 0) {
             navigate('/newuser')
         }
     }
-
-
-
     return (
         <>
             <div className='' ></div>
@@ -115,10 +100,7 @@ const FirstFrom = () => {
             <div className='p-8 border bg-[#F8F8F8] h-screen overflow-auto' >
                 <form action="post" onSubmit={handleSubmit} >
                     <div className='bg-[#fff] shadow-xl p-8 w-10/12  m-auto' >
-                        {/* <div className='flex justify-center items-center gap-4 text-gray-600 text-lg font-semibold ' >
-                            <label htmlFor="">Enter Your Full Name:</label>
-                            <CssTextField label="What is your full name" />
-                        </div> */}
+
                         <div className='flex justify-center items-center flex-col' >
                             <div className='text-gray-400 p-3'  >
                                 Choose any action belwo
